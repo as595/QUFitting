@@ -1,5 +1,5 @@
 # QUFitting
-QU Fitting for MeerKAT MIGHTEE-POL
+QU Fitting for MeerKAT MIGHTEE-POL. Fits are made using direct optimisation (ML) and using MCMC. Posterior uncertainties are returned for MCMC fits.  
 
 ## TL;DR
 
