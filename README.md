@@ -1,5 +1,4 @@
-# QUFitting
-QU Fitting for MeerKAT MIGHTEE-POL. Fits are made using direct optimisation (ML) and using MCMC. Posterior uncertainties are returned for MCMC fits.  
+# QUFitting for MeerKAT MIGHTEE-POL
 
 ## TL;DR
 
@@ -18,6 +17,16 @@ cfg_file = 'xmmlss13.cfg'
 qu = QUfit(cfg_file)
 qu.run_qu()
 ```
+
+## Method
+
+QU fitting is done in two ways: (i) a maximum-likelihood (ML) value obtained through direct optimisation using a single Faraday-thin component model, and (ii) a maximum-a-posteriori (MAP) expectation value obtained using MCMC optimisation of a single Faraday-thin component model. 
+
+ML fits are initialised using the P0 and phi0 values from the Faraday depth spectrum. chi0 is initialised to zero.
+
+In each case the MAP value is obtained using an MCMC initialised on the ML value with uniform priors in the range 0 < P0 < P_max uJy, -1000 < phi0 < +1000 rad/m^2 and -pi <= chi0 < pi radians, where P_max is set to be a factor of 1.2 times the ML value of P0 if P0 > 1000 uJy, and 1000 uJy otherwise. 
+
+MCMC convergence is assessed using the auto-correlation length of the chains; a burn-in of 5 times the autocorrelation length is discarded and chains are thinned by a factor of 15 in order to calculate final posterior distributions. Posterior uncertainties at a level of 1-sigma are provided for MAP estimates.
 
 ## Details
 
