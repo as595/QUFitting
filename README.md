@@ -28,7 +28,7 @@ MCMC convergence is assessed using the auto-correlation length of the chains; a 
 
 ## Details
 
-QUFit uses a [configuration file]() to define the required fitting. The configuration file defines where the spectral data are located and where the MIGHTEE-POL source catalogue is located.
+QUFit uses a [configuration file](https://github.com/as595/QUFitting/blob/main/configs/xmmlss13.cfg) to define the required fitting. The configuration file defines where the spectral data are located and where the MIGHTEE-POL source catalogue is located.
 
 QUFit expects spectral data in the following format:
 
