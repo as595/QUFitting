@@ -26,6 +26,8 @@ Fits are initialised using the P0 and phi0 values from the Faraday depth spectru
 
 MCMC convergence is assessed using the auto-correlation length of the chains; a burn-in of 5 times the autocorrelation length is discarded and chains are thinned by a factor of 15 in order to calculate final posterior distributions. Posterior uncertainties at a level of 1-sigma are provided for MAP estimates.
 
+Fits can be made to either a `single` source, or to `all` sources in the pol_detections catalogue.
+
 ## Details
 
 QUFit uses a [configuration file](https://github.com/as595/QUFitting/blob/main/configs/xmmlss13.cfg) to define the required fitting. The configuration file defines where the spectral data are located and where the MIGHTEE-POL source catalogue is located.
