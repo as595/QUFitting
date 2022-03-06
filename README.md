@@ -20,7 +20,7 @@ qu.run_qu()
 
 ## Method
 
-QU fitting can be done in two ways: (i) a maximum-likelihood (ML) value obtained through direct optimisation using a single Faraday-thin component model, and (ii) a maximum-a-posteriori (MAP) expectation value obtained using MCMC optimisation of a single Faraday-thin component model. In both cases fits can be made using the measured QU data (with or without background subtraction) *or* using the polarisation fraction data.
+QU fitting can be done in two ways: (i) a maximum-likelihood (ML) value obtained through direct optimisation using a single Faraday-thin component model, and (ii) a maximum-a-posteriori (MAP) expectation value obtained using MCMC optimisation of a single Faraday-thin component model. In both cases fits can be made using the measured QU data *or* using the polarisation fraction data (with or without background subtraction).
 
 Fits are initialised using the P0 and phi0 values from the Faraday depth spectrum. chi0 is initialised to zero.
 
