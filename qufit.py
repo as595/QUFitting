@@ -20,8 +20,8 @@ class QUfit():
     
         self.cfg = cfg             # get configuration
         self.data = QUdata(cfg)    # init data class
-        self.data.read_cat()       # read catalogue file 
         self.data.read_data()      # read the QU data
+        self.data.read_cat()       # read catalogue file 
         
 
     def select_model(self):
