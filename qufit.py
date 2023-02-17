@@ -16,12 +16,13 @@ pl.rcParams['figure.dpi'] = 300
 
 class QUfit():
 
-    def __init__(self, cfg):
+    def __init__(self, cfg_file):
     
-        self.cfg = cfg             # get configuration
-        self.data = QUdata(cfg)    # init data class
-        self.data.read_data()      # read the QU data
-        self.data.read_cat()       # read catalogue file 
+        self.cfg = QUcfg()              # init config class
+        self.cfg.read_cfg(cfg_file)      # read the config file
+        self.data = QUdata(self.cfg)    # init data class
+        self.data.read_data()           # read the QU data
+        self.data.read_cat()            # read catalogue file 
         
 
     def select_model(self):
@@ -33,8 +34,8 @@ class QUfit():
         elif self.cfg.modeltype=='SFTdouble':   # SFT x 2
             self.model = QUSimpleDouble(pol_frac=self.cfg.pol_frac, catdata=self.data.cat_data)
 
-
         return
+
 
     def run_file(self):
 
