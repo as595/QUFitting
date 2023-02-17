@@ -34,7 +34,7 @@ class QUdata():
 
         # make data in lambda^2:
         self.l2 = (const_c/self.nu)**2
-
+        
         return
 
     def read_cat(self):
