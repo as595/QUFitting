@@ -243,8 +243,7 @@ class QUSimple(QUmodel):
         self.nparms = 3
         self.pol_frac = pol_frac
         self.cat_data = catdata
-        self.data = None
-
+        
         self.labels = [r"$P_0$", r"$\phi_0$", r"$\chi_0$"]
         
 
