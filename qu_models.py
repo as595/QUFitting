@@ -25,6 +25,7 @@ class QUmodel():
         self.nparms = 3
         self.pol_frac = pol_frac
         self.cat_data = catdata
+        self.pinit = None
 
         self.labels=["P0", "phi0", "chi0"]
 
@@ -57,7 +58,7 @@ class QUmodel():
         
     def ml_fit(self):
     
-        if not hasattr(self, 'pinit'):
+        if not hasattr(self, 'bnds'):
             self.initialisation()
         
         nll = lambda *args: -1.*self.log_like(*args)
@@ -419,7 +420,8 @@ class QUSimpleDouble(QUmodel):
         self.nparms = 6
         self.pol_frac = pol_frac
         self.cat_data = catdata
-
+        self.pinit = None
+        
         self.labels = [r"$P_0$", r"$\phi_0$", r"$\chi_0$", r"$f_{\rm p}$", r"$\phi_1$", r"$\chi_1$"]
         
 
