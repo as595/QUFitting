@@ -81,7 +81,7 @@ class QUfit():
                 try:
                     idx = np.argwhere(self.data.cat_data[:,0]==srcid)[0][0]
                     self.run_file()
-#                    self.update_output()
+                    if self.cfg.write_output: self.write_output()
                     
                 except:
                     print("{}: source not in catalogue - no fit".format(srcid))
@@ -89,9 +89,13 @@ class QUfit():
                 
         else:
             self.run_file()
- 
+            if self.cfg.write_output: self.write_output()
+            
         return
         
+    def write_output(self):
+
+        return
 
     def check_cat(self):
     
