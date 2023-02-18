@@ -25,7 +25,7 @@ class QUfit():
         self.data.read_cat()            # read catalogue file 
         
 
-    def select_model(self):
+    def select_model(self, pinit=None):
     
         if self.cfg.modeltype=='SFT':           # SFT: Simple Faraday Thin
             self.model = QUSimple(pol_frac=self.cfg.pol_frac, catdata=self.data.cat_data)
@@ -34,6 +34,8 @@ class QUfit():
         elif self.cfg.modeltype=='SFTdouble':   # SFT x 2
             self.model = QUSimpleDouble(pol_frac=self.cfg.pol_frac, catdata=self.data.cat_data)
 
+        self.pinit=pinit
+        
         return
 
 
