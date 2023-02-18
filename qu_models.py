@@ -20,10 +20,12 @@ from dynesty import plotting as dyplot
 
 class QUmodel():
 
-    def __init__(self):
+    def __init__(self, pol_frac=False, catdata=None):
         
         self.nparms = 3
-            
+        self.pol_frac = pol_frac
+        self.cat_data = catdata
+
         self.labels=["P0", "phi0", "chi0"]
 
 
@@ -410,11 +412,14 @@ class QUSimpleExternal(QUmodel):
 # ---------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------
             
-class QUSimpleDouble(QUmodel):
+class QUSimpleDouble(QUmodel, pol_frac=False, catdata=None):
 
     def __init__(self):
     
         self.nparms = 6
+        self.pol_frac = pol_frac
+        self.cat_data = catdata
+
         self.labels = [r"$P_0$", r"$\phi_0$", r"$\chi_0$", r"$f_{\rm p}$", r"$\phi_1$", r"$\chi_1$"]
         
 
