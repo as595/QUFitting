@@ -412,9 +412,9 @@ class QUSimpleExternal(QUmodel):
 # ---------------------------------------------------------------------------------
 # ---------------------------------------------------------------------------------
             
-class QUSimpleDouble(QUmodel, pol_frac=False, catdata=None):
+class QUSimpleDouble(QUmodel):
 
-    def __init__(self):
+    def __init__(self, pol_frac=False, catdata=None):
     
         self.nparms = 6
         self.pol_frac = pol_frac
