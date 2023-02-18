@@ -25,8 +25,7 @@ class QUmodel():
         self.nparms = 3
         self.pol_frac = pol_frac
         self.cat_data = catdata
-        self.pinit = None
-
+        
         self.labels=["P0", "phi0", "chi0"]
 
 
@@ -79,7 +78,7 @@ class QUmodel():
 
         self.plot_corner = plot_corner
         
-        if not hasattr(self, 'pos'):
+        if not hasattr(self, 'pinit'):
             self.initialisation()
             
         nwalkers, ndim = self.pos.shape
@@ -274,11 +273,8 @@ class QUSimple(QUmodel):
         self.chi0_min = -0.5*np.pi
         self.chi0_max = 0.5*np.pi
         
-        if pinit is None:
-            self.pinit = np.array([self.p0_init, self.phi_init, 0.]) # update this line for the model
-        else:
-            self.pinit = pinit
-
+        self.pinit = np.array([self.p0_init, self.phi_init, 0.]) # update this line for the model
+        
         if self.pol_frac:
             self.p0_max = 100.
         else:
@@ -420,7 +416,6 @@ class QUSimpleDouble(QUmodel):
         self.nparms = 6
         self.pol_frac = pol_frac
         self.cat_data = catdata
-        self.pinit = None
         
         self.labels = [r"$P_0$", r"$\phi_0$", r"$\chi_0$", r"$f_{\rm p}$", r"$\phi_1$", r"$\chi_1$"]
         
@@ -449,10 +444,7 @@ class QUSimpleDouble(QUmodel):
         self.chi0_min = -0.5*np.pi
         self.chi0_max = 0.5*np.pi
         
-        if self.pinit is None:
-            self.pinit = np.array([self.p0_init, self.phi_init, 0., 0.5, self.phi_init, 0.]) # update this line for the model
-        else:
-            assert len(pinit)==self.nparms, "pinit has wrong number of parameters"
+        self.pinit = np.array([self.p0_init, self.phi_init, 0., 0.5, self.phi_init, 0.]) # update this line for the model
          
         if self.pol_frac:
             self.p0_max = 100.
