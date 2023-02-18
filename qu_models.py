@@ -20,11 +20,9 @@ from dynesty import plotting as dyplot
 
 class QUmodel():
 
-    def __init__(self, pol_frac=False, catdata=None):
+    def __init__(self):
         
         self.nparms = 3
-        self.pol_frac = pol_frac
-        self.cat_data = catdata
             
         self.labels=["P0", "phi0", "chi0"]
 
@@ -447,7 +445,7 @@ class QUSimpleDouble(QUmodel):
         if self.pinit is None:
             self.pinit = np.array([self.p0_init, self.phi_init, 0., 0.5, self.phi_init, 0.]) # update this line for the model
         else:
-            assert len(pinit) = self.nparms, "pinit has wrong number of parameters"
+            assert len(pinit)==self.nparms, "pinit has wrong number of parameters"
          
         if self.pol_frac:
             self.p0_max = 100.
