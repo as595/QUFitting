@@ -63,8 +63,7 @@ class QUcfg():
 
         self.fit_type  = config_dict['data']['type']
         self.data_path = config_dict['data']['path']
-        if self.fit_type=='single':
-            self.data_file = config_dict['data']['file']
+        self.data_file = config_dict['data']['file']
         self.catpath   = config_dict['data']['catpath']
         self.catfile   = config_dict['data']['catfile']
 
@@ -96,7 +95,7 @@ class QUcfg():
 
         if "output" in config_dict:
             self.outfile   = config_dict['output']['outfile']
-            self.output    = config_dict['output']['write_output']
+            self.output   = config_dict['output']['write_output']
             
 
         return

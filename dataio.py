@@ -8,9 +8,10 @@ class QUdata():
         self.cfg = cfg
 
     def read_data(self):
-
+        
         # freq       I        Q        U        V        N
         data = np.loadtxt(self.cfg.data_path+self.cfg.data_file)
+        
         self.nu   = data[:,0]*1e6
         self.stokesI  = data[:,1]  # stokes I in file is Russ' model, not the raw data
         self.stokesQn = data[:,2]

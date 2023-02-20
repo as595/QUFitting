@@ -20,13 +20,15 @@ from dynesty import plotting as dyplot
 
 class QUmodel():
 
-    def __init__(self, pol_frac=False, catdata=None):
+    def __init__(self, pol_frac=False, catdata=None, verbose=True):
         
         self.nparms = 3
         self.pol_frac = pol_frac
         self.cat_data = catdata
+        self.verbose = verbose
         
         self.labels=["P0", "phi0", "chi0"]
+
 
 
     def log_like(self, theta):
@@ -65,13 +67,14 @@ class QUmodel():
         soln = minimize(nll, self.pinit, bounds=self.bnds)
         self.parms_ml = soln.x
                 
-        print("------")
-        print("ML estimates:")
-        for i in range(len(self.pinit)):
-            print("{} = {:.3f}".format(self.labels[i].strip('$\\').replace('_',''), self.parms_ml[i]))
-        print("------")
-    
-        return
+        if self.verbose:
+            print("------")
+            print("ML estimates:")
+            for i in range(len(self.pinit)):
+                print("{} = {:.3f}".format(self.labels[i].strip('$\\').replace('_',''), self.parms_ml[i]))
+            print("------")
+        
+            return
         
         
     def mcmc_fit(self, plot_corner):
@@ -84,13 +87,14 @@ class QUmodel():
         nwalkers, ndim = self.pos.shape
 
         sampler = emcee.EnsembleSampler(nwalkers, ndim, self.log_prob)
-        sampler.run_mcmc(self.pos, 10000, progress=True)
+        sampler.run_mcmc(self.pos, 10000, progress=self.verbose)
 
         try:
             tau = sampler.get_autocorr_time()
             self.mcmc_samples = sampler.get_chain(discard=int(5*np.mean(tau)), thin=15, flat=True)
         except:
-            print("Autocorrelation time too long - results questionable")
+            if self.verbose:
+                print("Autocorrelation time too long - results questionable")
             self.mcmc_samples = sampler.get_chain(discard=1000, thin=15, flat=True)
 
         if self.plot_corner:
@@ -103,8 +107,9 @@ class QUmodel():
             pl.savefig(srcid+"_corner_mcmc.png", dpi=150)
             pl.close()
 
-        print("------")
-        print("MCMC estimates:")
+        if self.verbose:
+            print("------")
+            print("MCMC estimates:")
     
         p_exp = np.zeros((ndim,3))
         for i in range(ndim):
@@ -114,12 +119,14 @@ class QUmodel():
             p_exp[i,1] = q[0]
             p_exp[i,2] = q[1]
             
-            print("{} = {:.3f} (-{:.3f}, +{:.3f})".format(self.labels[i].strip('$\\').replace('_',''), p_exp[i,0], p_exp[i,1], p_exp[i,2]))
+            if self.verbose:
+                print("{} = {:.3f} (-{:.3f}, +{:.3f})".format(self.labels[i].strip('$\\').replace('_',''), p_exp[i,0], p_exp[i,1], p_exp[i,2]))
         
-        print("------")
+        if self.verbose:
+            print("------")
 
         self.parms_mcmc = p_exp
-        
+
         return
     
     
@@ -151,9 +158,10 @@ class QUmodel():
         self.nest_weights = dres.importance_weights()
         self.nest_samples = dres['samples']
         self.evid_nest = np.array([dres['logz'][-1],dres['logzerr'][-1]])
-                
-        print("------")
-        print("Nested Sampler estimates:")
+
+        if self.verbose:        
+            print("------")
+            print("Nested Sampler estimates:")
         
         p_exp = np.zeros((ndim,3))
         for i in range(ndim):
@@ -163,11 +171,13 @@ class QUmodel():
             p_exp[i,1] = q[0]
             p_exp[i,2] = q[1]
             
-            print("{} = {:.3f} (-{:.3f}, +{:.3f})".format(self.labels[i].strip('$\\').replace('_',''), p_exp[i,0], p_exp[i,1], p_exp[i,2]))
+            if self.verbose:
+                print("{} = {:.3f} (-{:.3f}, +{:.3f})".format(self.labels[i].strip('$\\').replace('_',''), p_exp[i,0], p_exp[i,1], p_exp[i,2]))
         
-        print(" ")
-        print(r"log Z = {:.3f} +/- {:.3f}".format(self.evid_nest[0], self.evid_nest[1]))
-        print("------")
+        if self.verbose:
+            print(" ")
+            print(r"log Z = {:.3f} +/- {:.3f}".format(self.evid_nest[0], self.evid_nest[1]))
+            print("------")
         
         self.parms_nest = p_exp
         
@@ -183,9 +193,10 @@ class QUmodel():
         sampler.run_nested()
         dres = sampler.results
         self.evid_nest = np.array([dres['logz'][-1],dres['logzerr'][-1]])
-        print(" ")
-        print(r"log Z (3 sigma) = {:.3f} +/- {:.3f}".format(self.evid_nest[0], self.evid_nest[1]))
-        print("------")
+        if self.verbose:
+            print(" ")
+            print(r"log Z (3 sigma) = {:.3f} +/- {:.3f}".format(self.evid_nest[0], self.evid_nest[1]))
+            print("------")
         
         # 10 sigma bounds:
         nsig = 10
@@ -199,10 +210,11 @@ class QUmodel():
         sampler.run_nested()
         dres = sampler.results
         self.evid_nest = np.array([dres['logz'][-1],dres['logzerr'][-1]])
-        print(" ")
-        print(r"log Z (10 sigma) = {:.3f} +/- {:.3f}".format(self.evid_nest[0], self.evid_nest[1]))
-        print("------")
-        
+        if self.verbose:
+            print(" ")
+            print(r"log Z (10 sigma) = {:.3f} +/- {:.3f}".format(self.evid_nest[0], self.evid_nest[1]))
+            print("------")
+
         return
     
     
@@ -238,11 +250,12 @@ class QUmodel():
             
 class QUSimple(QUmodel):
 
-    def __init__(self, pol_frac=False, catdata=None):
+    def __init__(self, pol_frac=False, catdata=None, verbose=True):
     
         self.nparms = 3
         self.pol_frac = pol_frac
         self.cat_data = catdata
+        self.verbose = verbose
         
         self.labels = [r"$P_0$", r"$\phi_0$", r"$\chi_0$"]
         
@@ -283,12 +296,13 @@ class QUSimple(QUmodel):
             if self.pinit[0]>1000.:
                 self.p0_max = 1.2*pinit[0]
         
-        print("------")
-        print("Initialisation:")
-        for i in range(0, self.nparms):
-            print("{0} = {1:.3f}".format(self.labels[i].strip('$\\').replace('_',''), self.pinit[i]))
-        print("------")
-        
+        if self.verbose:
+            print("------")
+            print("Initialisation:")
+            for i in range(0, self.nparms):
+                print("{0} = {1:.3f}".format(self.labels[i].strip('$\\').replace('_',''), self.pinit[i]))
+            print("------")
+            
         self.pos = self.pinit + 1e-4 * np.random.randn(32, self.nparms)
         self.bnds = ((0, self.p0_max), (-1000., 1000.), (self.chi0_min, self.chi0_max))
         self.df_init = pd.DataFrame(self.pinit, self.labels)
