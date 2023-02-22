@@ -77,21 +77,13 @@ class QUcfg():
             self.modeltype = config_dict['fitting']['modeltype']
             self.fit_ml    = config_dict['fitting']['ml']
             self.fit_mcmc  = config_dict['fitting']['mcmc']
-            self.fit_gpm   = config_dict['fitting']['gpm']
             self.fit_nested= config_dict['fitting']['nested']
 
         if "plots" in config_dict:
             self.plot_path = config_dict['plots']['path']
             if not os.path.exists(self.plot_path):
-                print("Path to plotting outputs does not exist - please correct path")
+                print("Path to plotting outputs does not exist - please correct/create path")
                 quit()
-
-            self.plot_raw  = config_dict['plots']['rawdata']
-            self.plot_fd   = config_dict['plots']['fdspec']
-            self.plot_ml   = config_dict['plots']['mlfit']
-            self.plot_corner = config_dict['plots']['corner']
-            self.plot_mcmc = config_dict['plots']['mcmcfit']
-            self.plot_gpm = config_dict['plots']['gpmfit']
 
         if "output" in config_dict:
             self.outfile   = config_dict['output']['outfile']

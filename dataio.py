@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from utils import *
 
 class QUdata():
@@ -40,11 +41,7 @@ class QUdata():
 
     def read_cat(self):
 
-        f = open(self.cfg.catpath+self.cfg.catfile)
-        cat_cols = f.readline().rstrip("\n")
-        cat_unts = f.readline().rstrip("\n")
-        cat_data = np.loadtxt(self.cfg.catpath+self.cfg.catfile)
-        
-        self.cat_data = cat_data
+        df = pd.read_fwf(self.cfg.catpath+self.cfg.catfile, comment='--')
+        self.cat_data = np.array(df.values)
 
         return

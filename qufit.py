@@ -34,11 +34,11 @@ class QUfit():
     def select_model(self, pinit=None):
     
         if self.cfg.modeltype=='SFT':           # SFT: Simple Faraday Thin
-            self.model = QUSimple(pol_frac=self.cfg.pol_frac, catdata=self.data.cat_data)
+            self.model = QUSimple(pol_frac=self.cfg.pol_frac, catdata=self.data.cat_data, plotpath = self.cfg.plot_path)
         elif self.cfg.modeltype=='SFTexternal': # SFT with External depol screen
-            self.model = QUSimpleExternal(pol_frac=self.cfg.pol_frac, catdata=self.data.cat_data)
+            self.model = QUSimpleExternal(pol_frac=self.cfg.pol_frac, catdata=self.data.cat_data, plotpath = self.cfg.plot_path)
         elif self.cfg.modeltype=='SFTdouble':   # SFT x 2
-            self.model = QUSimpleDouble(pol_frac=self.cfg.pol_frac, catdata=self.data.cat_data)
+            self.model = QUSimpleDouble(pol_frac=self.cfg.pol_frac, catdata=self.data.cat_data, plotpath = self.cfg.plot_path)
 
         self.pinit=pinit
         

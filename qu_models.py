@@ -20,14 +20,17 @@ from dynesty import plotting as dyplot
 
 class QUmodel():
 
-    def __init__(self, pol_frac=False, catdata=None, verbose=True):
+    def __init__(self, pol_frac=False, catdata=None, verbose=True, plotpath=None):
         
         self.nparms = 3
         self.pol_frac = pol_frac
         self.cat_data = catdata
         self.verbose = verbose
-        
         self.labels=["P0", "phi0", "chi0"]
+        if plotpath is None:
+            self.plot_path='.'
+        else:
+            self.plot_path = plotpath
 
 
 
@@ -104,7 +107,7 @@ class QUmodel():
                 fig = corner.corner(self.mcmc_samples, labels=self.labels, show_titles=True)
             srcid = 'ID'+str(self.srcid)
             pl.suptitle(srcid)
-            pl.savefig(srcid+"_corner_mcmc.png", dpi=150)
+            pl.savefig(self.plot_path+"/"+srcid+"_corner_mcmc.png", dpi=150)
             pl.close()
 
         if self.verbose:
@@ -152,7 +155,7 @@ class QUmodel():
                               
             srcid = 'ID'+str(self.srcid)
             pl.suptitle(srcid)
-            pl.savefig(srcid+"_corner_nested.png", dpi=150)
+            pl.savefig(self.plot_path+"/"+srcid+"_corner_nested.png", dpi=150)
             pl.close()
 
         self.nest_weights = dres.importance_weights()
@@ -250,14 +253,16 @@ class QUmodel():
             
 class QUSimple(QUmodel):
 
-    def __init__(self, pol_frac=False, catdata=None, verbose=True):
+    def __init__(self, pol_frac=False, catdata=None, verbose=True, plotpath=None):
     
-        self.nparms = 3
-        self.pol_frac = pol_frac
-        self.cat_data = catdata
-        self.verbose = verbose
+        super().__init__(pol_frac, catdata, verbose, plotpath)
         
+        self.nparms = 3
         self.labels = [r"$P_0$", r"$\phi_0$", r"$\chi_0$"]
+        #self.pol_frac = pol_frac
+        #self.cat_data = catdata
+        #self.verbose = verbose
+        
         
 
     def model(self, theta, x):
@@ -278,10 +283,10 @@ class QUSimple(QUmodel):
         
         if not self.pol_frac:
             self.p0_init  = self.cat_data[idx,9]
-            self.phi_init = self.cat_data[idx,15]
+            self.phi_init = self.cat_data[idx,14]
         else:
             self.p0_init  = self.cat_data[idx,11]
-            self.phi_init = self.cat_data[idx,15]
+            self.phi_init = self.cat_data[idx,14]
 
         self.chi0_min = -0.5*np.pi
         self.chi0_max = 0.5*np.pi
@@ -367,10 +372,10 @@ class QUSimpleExternal(QUmodel):
         
         if not self.pol_frac:
             self.p0_init  = self.cat_data[idx,9]
-            self.phi_init = self.cat_data[idx,15]
+            self.phi_init = self.cat_data[idx,14]
         else:
             self.p0_init  = self.cat_data[idx,11]
-            self.phi_init = self.cat_data[idx,15]
+            self.phi_init = self.cat_data[idx,14]
 
         self.chi0_min = -0.5*np.pi
         self.chi0_max = 0.5*np.pi
@@ -450,10 +455,10 @@ class QUSimpleDouble(QUmodel):
         
         if not self.pol_frac:
             self.p0_init  = self.cat_data[idx,9]
-            self.phi_init = self.cat_data[idx,15]
+            self.phi_init = self.cat_data[idx,14]
         else:
             self.p0_init  = self.cat_data[idx,11]
-            self.phi_init = self.cat_data[idx,15]
+            self.phi_init = self.cat_data[idx,14]
 
         self.chi0_min = -0.5*np.pi
         self.chi0_max = 0.5*np.pi
